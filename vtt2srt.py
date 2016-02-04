@@ -18,9 +18,12 @@ if __name__ == "__main__":
 	with open(originName, "r") as origin:
 		with open(destinyName, "w") as destiny:
 			print("Converting %s to %s" % (originName, destinyName))
-			for line in origin.readlines()[2:]:
-				#be careful. This doesn't check if this is a time SRT line
+			for line in origin.readlines():
+				#Be careful. This doesn't check if this line is a timecode line
 				#or a text line. But hey I don't have all night.
+				#If original vtt file doesn't have numbering before timecodes,
+				#the resulting srt won't have either, and thus it won't work.
+				line.replace("WEBVTT", "")
 				if line.find(" --> ") != -1:
 					line = line.replace(".", ",")
 				destiny.write(line)
